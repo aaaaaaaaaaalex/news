@@ -1,0 +1,1 @@
+export { Layout as ContentLayout } from './ui/layout'
