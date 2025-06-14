@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
-import "./globals.css";
 
 import { ContentLayout } from "@/modules/layout";
+
+import "./globals.css";
+import ReduxProvider from "./store/redux-provider";
 
 const lato = Lato({
     subsets: ['latin'],
@@ -21,14 +23,16 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body
-                className={`${lato.className} antialiased`}
-            >
-                <ContentLayout>
-                    {children}
-                </ContentLayout>
-            </body>
-        </html>
+            <html lang="en">
+                <body
+                    className={`${lato.className} antialiased`}
+                >
+                    <ReduxProvider>
+                        <ContentLayout>
+                            {children}
+                        </ContentLayout>                        
+                    </ReduxProvider>
+                </body>
+            </html>
     );
 }
