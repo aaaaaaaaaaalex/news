@@ -48,7 +48,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     try {
-        const data = await new Promise(resolve => {
+        const data = await new Promise<Article[]>(resolve => {
             const data = generateData();
             setTimeout(() => {
                 resolve(data);
@@ -76,7 +76,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             headers: { "Content-Type": "application/json" },
         });
 
-    } catch (err: unknown) {
+    } catch {
         return new NextResponse(JSON.stringify({ error: "Server error" }), {
             status: 500,
             headers: { "Content-Type": "application/json" },
