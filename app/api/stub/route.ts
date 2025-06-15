@@ -13,14 +13,32 @@ type Multimedia = {
     url: string;
 };
 
+function generateData() {
+    const fakeData = [];
+    for (let index = 10; index < 60; index++) {
+        fakeData.push({
+            pub_date: `2023-05-01T02:${index}:04+0000`,
+            abstract: 'title' + index,
+            web_url: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/' + index,
+            source: 'nyt',
+            multimedia: [
+                {
+                    subtype: 'xlarge',
+                    url: 'images/2023/04/30/arts/30succession/30succession-articleLarge.jpg'
+                }
+            ],
+        })
+    }
+    return fakeData;
+}
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
-    const API_KEY = process.env.NYT_API_KEY;
 
     const { searchParams } = new URL(request.url);
     const year = searchParams.get('year');
     const month = searchParams.get('month');
     const page = parseInt(searchParams.get('page') || '1');
-    const pageSize = 100;
+    const pageSize = 20;
 
     if (!year || !month) {
         return new NextResponse(JSON.stringify({ error: "Missing year or month" }), {
@@ -30,25 +48,17 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     try {
-        const nytRes = await fetch(
-            `https://api.nytimes.com/svc/archive/v1/${year}/${month}.json?api-key=${API_KEY}`
-        );
-
-        if (!nytRes.ok) {
-            return new NextResponse(JSON.stringify({ error: "NYT API error", status: nytRes.status }), {
-                status: nytRes.status,
-                headers: { "Content-Type": "application/json" },
-            });
-        }
-
-        const data = await nytRes.json();
+        const data = await new Promise(resolve => {
+            const data = generateData();
+            setTimeout(() => {
+                resolve(data);
+            }, 2000)
+        })
 
         const start = (page - 1) * pageSize;
         const end = start + pageSize;
 
-        // nyt возвращает новости, начиная с 1 дня месяца
-        // будем вырезать новости с конца
-        const slicedDocs = data.response.docs.reverse().slice(start, end);
+        const slicedDocs = data.slice(start, end);
 
         const minimalData = slicedDocs.map((article: Article) => {
             const image = article.multimedia?.find(img => img.subtype === 'xlarge');

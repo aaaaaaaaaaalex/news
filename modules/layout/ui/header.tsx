@@ -11,6 +11,7 @@ export function Header() {
         <>
             <header className={`
                 sticky top-0 right-0 left-0
+                z-10
                 pt-2 pb-2
                 flex items-center justify-between
                 bg-white

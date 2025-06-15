@@ -1,13 +1,14 @@
 'use client'
 
-const apiKey = process.env.NEXT_PUBLIC_API_KEY;
-console.log(apiKey);
-
 const baseUrl = '/api';
 
 export const api = {
-    getNews: (year: string, month: string) => {
-        return fetch(`${baseUrl}/nyt?year=${year}&month=${month}`)
+    getNews: (year: number, month: number, page: number = 1) => {
+        return fetch(`${baseUrl}/nyt?year=${year}&month=${month}&page=${page}`)
+            .then(response => response.json())
+    },
+    getNewsStub: (year: number, month: number, page: number = 1) => {
+        return fetch(`${baseUrl}/stub?year=${year}&month=${month}&page=${page}`)
             .then(response => response.json())
     }
 }

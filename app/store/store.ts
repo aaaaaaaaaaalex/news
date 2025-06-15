@@ -1,6 +1,7 @@
-import { newsReducer } from '@/modules/news-list';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { combineReducers, createStore } from 'redux'
+
+import { newsReducer } from '@/modules/news-list';
 
 const reducer = combineReducers({
     news: newsReducer
