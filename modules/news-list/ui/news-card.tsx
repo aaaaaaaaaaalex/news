@@ -1,11 +1,11 @@
 import Image from "next/image";
 
-import { getDateFormattedCard } from "@/shared/helpers/get-date-formatted-card";
+import { getDateAndTimeFormatted } from "@/shared/helpers/get-date-and-time-formatted";
 
 import { News } from "../model/slice";
 
 export function NewsCard({ news }: { news: News }) {
-    const dateFormatted = getDateFormattedCard(news.pub_date);
+    const dateFormatted = getDateAndTimeFormatted(news.pub_date);
 
     return (
         <a className="flex gap-3 min-h-20 md:min-h-56"

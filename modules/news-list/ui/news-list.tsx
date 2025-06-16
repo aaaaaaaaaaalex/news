@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 
 import { api } from "@/shared/api/api";
-import { getDateFormattedTitle } from "@/shared/helpers/get-date-formatted-title";
+import { getDateFormatted } from "@/shared/helpers/get-date-formatted";
 
 import { useAppSelector } from "@/app/store/store";
 
@@ -64,7 +64,7 @@ export function NewsList() {
         <>
             <div className="flex flex-col gap-4 mb-12">
                 {Object.entries(news).map(([date, newsItems]) => {
-                    const dateFormatted = getDateFormattedTitle(date);
+                    const dateFormatted = getDateFormatted(date);
                     return (
                         <div key={date}>
                             <h2 className="font-bold text-lg leading-[1.44] mb-[11px]">News for {dateFormatted}</h2>

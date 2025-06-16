@@ -27,6 +27,7 @@ export default function RootLayout({
                 <body
                     className={`${lato.className} antialiased`}
                 >
+                {/* TODO: добавить ErrorBoundary */}
                     <ReduxProvider>
                         <ContentLayout>
                             {children}
